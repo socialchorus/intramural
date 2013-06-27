@@ -9,9 +9,11 @@ describe Intramural::Standalone::App do
   end
 
   let(:events) { [] }
-  let(:writer) { Intramural::Inline::Writer.new({foo: 'bar'}) }
+  let(:writer) { Intramural::Inline::Writer.new('intramural_test', {foo: 'bar'}) }
   let(:quitter) { Intramural::Inline::Quitter.new }
-  let(:connection) { Intramural::Inline::Connection.new(Intramural.config, Intramural.logger) }
+  let(:connection) { 
+    Intramural::Inline::Connection.new(Intramural.config, Intramural.logger) 
+  }
 
   context "when a message is sent to the quit queue" do
     it "stops the loop process" do

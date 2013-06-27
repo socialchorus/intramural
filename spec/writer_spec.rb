@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Intramural::Inline::Writer do
   before :all do
     Intramural.config = {
-      queue_name: 'intramural_test'
+      queue_name: 'something_else'
     }
     Intramural.logger = Logger.new('/dev/null')
   end
@@ -15,16 +15,17 @@ describe Intramural::Inline::Writer do
 
   let(:message) { {foo: 'bar'} }
   let(:events) { [] }
+  let(:queue_name) { "writer_test" }
 
   let(:writer) {
-    Intramural::Inline::Writer.new(message)
+    Intramural::Inline::Writer.new(queue_name, message)
   }
 
   describe '#run' do
     it "writes the message to the queue as json" do
       writer.perform
 
-      connection = Intramural::Inline::Connection.new(Intramural.config, Intramural.logger)
+      connection = Intramural::Inline::Connection.new(writer.config, Intramural.logger)
       connection.queue.subscribe do |delivery_info, metadata, message|
         events.push(message)
       end

@@ -13,6 +13,8 @@ describe Intramural do
     queue.purge
   end
 
+  let(:queue_name) { "intramural_test" }
+
   describe 'inline processes' do
     let(:events) { [] }
 
@@ -20,7 +22,7 @@ describe Intramural do
       let(:message) { {foo: 'bar'} }
 
       it "writes to a json message to the default queue" do
-        Intramural.write(message)
+        Intramural.write(queue_name, message)
 
         Intramural::Inline::Reader.new.run do |m|
           events.push(m)
@@ -34,7 +36,7 @@ describe Intramural do
       let(:message) { {hello: 'world'} }
 
       before do
-        Intramural.write(message)
+        Intramural.write(queue_name, message)
       end
 
       it 'reads from the default queue and call the callback' do

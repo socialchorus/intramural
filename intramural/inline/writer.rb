@@ -5,9 +5,10 @@ module Intramural
 
       attr_reader :message, :config, :logger
 
-      def initialize(message, options={})
+      def initialize(queue_name, message, options={})
         @message = message
         configure(options)
+        @config.queue = queue_name
       end
 
       def queue_name

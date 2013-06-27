@@ -1,6 +1,7 @@
 module Intramural
   class Config
-    attr_reader :additional_config, :queue
+    attr_reader :additional_config
+    attr_accessor :queue
 
     def initialize(queue_name, additional_config={})
       @queue = queue_name

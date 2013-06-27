@@ -1,9 +1,13 @@
 module Intramural
   module Inline
-    class Quitter < Writer
-      # allows no message
+    class Quitter
+      include Mixin
+
+      attr_reader :message
+
       def initialize(message=nil, options={})
-        super
+        @message = message || 'no reason given'
+        configure(options)
       end
 
       def queue_name
@@ -11,7 +15,7 @@ module Intramural
       end
 
       def perform
-        exchange.publish(message.to_json, routing_key: queue_name)
+        exchange.publish(message.to_s, routing_key: queue_name)
       end
     end
   end

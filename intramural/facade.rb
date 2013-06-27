@@ -16,8 +16,8 @@ module Intramural
     @logger ||= Intramural::Logger.new
   end
 
-  def self.write(message)
-    Intramural::Inline::Writer.new(message).perform
+  def self.write(queue_name, message)
+    Intramural::Inline::Writer.new(queue_name, message).perform
   end
 
   def self.read(&block)
